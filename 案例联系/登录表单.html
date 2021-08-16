@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>表单验证</title>
+    <style type="text/css">
+        body,
+        div,
+        p,
+        form,
+        input,
+        table,
+        tr,
+        td {
+            margin: 0;
+            padding: 0;
+            border: 0px;
+        }
+        
+        .top {
+            height: 80px;
+            width: 900px;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+        
+        .top_border {
+            width: 900px;
+            margin: 0 auto;
+        }
+        
+        .login {
+            float: right;
+        }
+        
+        .login span {
+            padding-top: 18px;
+            display: block;
+            float: left;
+            padding-right: 6px;
+        }
+        
+        .login input {
+            margin-top: 12px;
+        }
+        
+        .boy {
+            width: 900px;
+            height: auto;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        .boy .boy_left {
+            width: 70%;
+            height: auto;
+            float: left;
+        }
+        
+        .boy .boy_right {
+            width: 30%;
+            height: auto;
+            float: left;
+        }
+        
+        .message {
+            width: 200px;
+            height: 240px;
+            margin: 0 auto;
+            margin-top: 10px;
+            margin-bottom: 100px;
+            background: #F5FBFF url("./images/upreg.png") no-repeat center 60px;
+            background-size: 140px 140px;
+            border: 1px solid #D1EEFF;
+        }
+        
+        .message p:nth-child(1) {
+            font-weight: bold;
+            padding-left: 40px;
+            height: 30px;
+            padding-top: 13px;
+            text-align: left;
+            background: url(./images/phone.png) no-repeat 10px 6px;
+            border-bottom: 1px solid red;
+            margin-bottom: 160px;
+        }
+        
+        .message p:nth-child(2) {
+            text-align: center;
+        }
+        
+        .table {
+            margin-left: 100px;
+        }
+        
+        .table td {
+            padding: 10px 0px;
+        }
+        
+        .table td input {
+            height: 30px;
+            width: 160px;
+            border: 1px solid #ccc;
+            /*border-radius: 8px;*/
+        }
+        
+        .btn {
+            width: 40px;
+            height: 30px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="login">
+            <span>我已经注册，现在登录</span>
+            <input type="button" value="登录" class="btn" />
+        </div>
+
+        <div class="logo">
+            <img src="./images/logo.gif" alt="">
+            <img src="./images/reg.png" alt="">
+        </div>
+    </div>
+    <div class="top_border"><img src="./images/border.png" width="900" /></div>
+
+    <!-- 下面表单的操作 -->
+    <div class="boy">
+
+        <div class="boy_left">
+            <form action="" onsubmit="return chekform()">
+                <table class="table">
+                    <tr>
+                        <td>用户名:</td>
+                        <td><input id="user" type="text" name="user" onfocus="userfocus()" onblur="userblure()" />
+                            <span id="user_res"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>手机号：</td>
+                        <td><input type="text" name="phone" /></td>
+                    </tr>
+                    <tr>
+                        <td>验证码：</td>
+                        <td><input type="text" name="types" /></td>
+                    </tr>
+                    <tr>
+                        <td>密码：</td>
+                        <td><input type="password" name="pass" id="pass" onfocus="passfocus()" onblur="passblure()" />
+                            <span id="pass_res"></span>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table">
+                    <tr>
+                        <td width="60">&nbsp;</td>
+                        <td colspan="2" align="right"><input type="submit" value="提交" /></td>
+                    </tr>
+                </table>
+
+            </form>
+        </div>
+        <div class="boy_right">
+            <div class="message">
+                <p>手机快速注册</p>
+                <p>手机扫描二维码登录</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        //用户名获取焦点验证
+        function userfocus() {
+            var mess = "* 请输入长度为5-10之间的英文字母作为登录账号";
+            var spanobj = document.getElementById("user_res");
+            spanobj.innerHTML = mess;
+            spanobj.style.color = "red";
+            spanobj.style.fontSize = "10px";
+            console.log(111);
+        }
+        //用户名失去焦点验证
+        function userblure() {
+            var userObj = document.getElementById("user");
+            var spanobj = document.getElementById("user_res");
+            var user_val = userObj.value;
+            spanobj.style.color = "red";
+            spanobj.style.fontSize = "10px";
+            var tag = true;
+            if (user_val.length > 10 || user_val.length < 5) {
+                var mess = "* 请输入长度5-10之间的英文字母作为登录账号";
+                tag = false;
+            } else if (!checknum(user_val)) {
+                var mess = "* 用户名中不能包含数字";
+            } else if (!checkuser(user_val)) {
+                var mess = "* 存在特殊字符";
+                tag = false;
+            } else {
+                spanobj.style.color = "green";
+                mess = "* 正确";
+
+            }
+            spanobj.innerHTML = mess;
+            return tag;
+
+        }
+        //验证是否含有数值
+        function checknum(param) {
+            if (param.length > 0) {
+                for (var i = 0; i < param.length; i++) {
+                    if (!isNaN(param[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        //验证用户名中是否含有特殊符号
+        function checkuser(param) {
+            var arrs = ["@", "！", "#", "￥", "%", ".", "&", "*", '？', "/", "\\", "…"];
+            if (param.length > 0) {
+                for (var i = 0; i < arrs.length; i++) {
+                    for (var j = 0; j < param.length; j++) {
+                        console.log(param[j]);
+                        if (arrs[i] == param[j]) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        //密码框获取焦点验证密码
+        function passfocus() {
+            var mess = "* 请输入登录密码";
+            var spanobj = document.getElementById("pass_res");
+            spanobj.innerHTML = mess;
+            spanobj.style.color = "red";
+            spanobj.style.fontSize = "10px";
+            console.log(111);
+        }
+        //密码框失去焦点验证密码
+        function passblure() {
+            var pass_val = document.getElementById("pass").value;
+            var spanobj = document.getElementById("pass_res");
+            spanobj.style.fontSize = "10px";
+            var mess;
+            var tag = true;
+            if (pass_val.length > 16 || pass_val.length < 5) {
+                spanobj.style.color = "red";
+                mess = "* 密码长度需大于6个字符";
+                tag = false;
+            } else {
+                spanobj.style.color = "green";
+                mess = "* 正确";
+            }
+            spanobj.innerHTML = mess;
+            return tag;
+        }
+
+        //提交表单时验证用户名和密码
+        function chekform() {
+            var user = userblure();
+            var pass = passblure();
+            if (user && pass) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>

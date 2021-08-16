@@ -1,0 +1,37 @@
+
+.section ul {
+    margin-top: 20px;
+    float: right;
+    height: 50px;
+}
+
+ul li {
+    float: left;
+    height: 100%;
+}
+
+ul li a {
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.fw {
+    font-weight: 600;
+}
+
+ul li:last-child a {
+    background-color: #3385ff;
+    text-decoration: none;
+}
+.code {
+    width: 200px;
+    margin: 0px auto;
+}
+.fl {
+    width: 300px;
+    padding: 0 10px;
+    float: left;
+
+}
